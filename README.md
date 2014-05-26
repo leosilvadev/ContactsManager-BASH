@@ -1,4 +1,4 @@
-contatos-bash
-=============
+ContactsManager-BASH
+====================
 
-Gerenciador de contatos em desenvolvimento utilizando bash, para estudo e referencia, utilizando o dialog.
+A simple Contacts Manager in developing mode using Bash using dialog.
