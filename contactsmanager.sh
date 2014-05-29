@@ -1,5 +1,11 @@
 #!/bin/bash
 
+#################### GLOBAL ####################
+PATTERN_EMAIL="^[a-Z|0-9]+@[a-Z0-9]+\.[a-z]"
+PATTERN_PHONE="^[0-9]+$"
+#################### GLOBAL ####################
+
+
 
 #################### UTIL FUNCTIONS ####################
 function hashUserData {
@@ -97,13 +103,32 @@ function newContact {
 			   	--inputbox "Type the contact's phone:" 			\
 			   	0 0 )
 
-	_mail=$( dialog   		                                    \
+	_email=$( dialog   		                                    \
 				--stdout										\
 			   	--title "New contact"  	                    	\
 			   	--inputbox "Type the contact's e-mail:" 		\
 			   	0 0 )
 	
-	addContact $_name $_phone $_mail
+
+	validate $_phone $PATTERN_PHONE "Invalid phone format"
+	validate $_email $PATTERN_EMAIL "Invalid email format"
+
+	addContact $_name $_phone $_email
+}
+
+function validate {
+	_var=$1
+	_pattern=$2
+	_message=$3
+
+	if echo $_var | egrep $_pattern; then
+		echo "VALID"
+
+	else
+		dialog 	--title "Error" --msgbox "\n$_message" 0 0 
+		newContact
+
+	fi
 }
 
 function addContact {
